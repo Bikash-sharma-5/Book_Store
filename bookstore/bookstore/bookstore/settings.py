@@ -56,8 +56,6 @@ LOGOUT_REDIRECT_URL = 'login'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # ✅ Manually set Stripe keys
-STRIPE_SECRET_KEY = "sk_test_51Qt43CIc3qJnD28yBHppAq6Q9pTdj77XO7JE255QdYWTxeiflhehB7lNWJpaN11GsP46CBPSi9TYvPSrj2SvoJhi00FOt8jEOi"
-STRIPE_PUBLIC_KEY = "pk_test_51Qt43CIc3qJnD28yb70pUDLj7dbRr1Idu8df9DFC9AlvcHVaunvF0AvDXdTXJFwamX2Cz3R10KddRs4HRBMOxWwA00ln0RrtAy"
 
 # ✅ Debugging: Print to confirm values are set
 print(f"🔑 STRIPE_SECRET_KEY: {STRIPE_SECRET_KEY}")
