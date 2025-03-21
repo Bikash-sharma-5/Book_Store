@@ -1,0 +1,31 @@
+{% extends "store/base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2 class="text-center my-4">🛒 Your Shopping Cart</h2>
+    
+    {% if cart_items %}
+        <div class="row">
+            {% for item in cart_items %}
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <img src="{{ item.book.cover_image.url }}" class="card-img-top book-cover" alt="{{ item.book.title }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ item.book.title }}</h5>
+                        <p class="card-text"><strong>By:</strong> {{ item.book.author }}</p>
+                        <p class="card-text text-success"><strong>Price:</strong> ${{ item.book.price }}</p>
+                        <p class="card-text"><strong>Quantity:</strong> {{ item.quantity }}</p>
+                        
+                        <!-- Remove Button -->
+                        <a href="{% url 'remove_from_cart' item.book.id %}" class="btn btn-danger">❌ Remove</a>
+                        <a href="{% url 'checkout' %}" class="btn btn-primary">Proceed to Checkout</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-center text-muted">Your cart is empty. Start adding books now! 📚</p>
+    {% endif %}
+</div>
+{% endblock %}

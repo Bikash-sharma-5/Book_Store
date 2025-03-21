@@ -1,0 +1,65 @@
+{% extends "store/base.html" %}
+{% block content %}
+<div class="container">
+    <h2 class="text-center my-4">📚 Explore Our Books</h2>
+    <div class="row">
+        {% for book in books %}
+        <div class="col-md-4 col-lg-3 mb-4">
+            <div class="card" style="
+                border-radius: 10px;
+                overflow: hidden;
+                transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+                box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            " onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0px 8px 20px rgba(0, 0, 0, 0.2)';" 
+               onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0px 4px 10px rgba(0, 0, 0, 0.1)';">
+                
+                <!-- ✅ Book Cover -->
+                <div style="height: 250px; display: flex; align-items: center; justify-content: center; background: #f8f9fa;">
+                    <img src="{{ book.cover_image.url }}" alt="{{ book.title }}" style="max-height: 100%; width: auto;">
+                </div>
+
+                <!-- ✅ Book Details -->
+                <div class="card-body" style="padding: 15px; text-align: center;">
+                    <h5 style="font-size: 1.2rem; font-weight: bold;">{{ book.title }}</h5>
+                    <p style="font-size: 0.9rem; color: gray; margin-bottom: 5px;">by {{ book.author }}</p>
+                    
+                    <!-- ⭐ Star Rating -->
+                    <div style="margin-bottom: 8px;">
+                        {% for i in "12345" %}
+                            {% if forloop.counter <= book.rating %}
+                                <span style="color: #f1c40f; font-size: 16px;">★</span>
+                            {% else %}
+                                <span style="color: #ddd; font-size: 16px;">★</span>
+                            {% endif %}
+                        {% endfor %}
+                        <span style="font-size: 12px; color: gray;">({{ book.total_reviews }} reviews)</span>
+                    </div>
+
+                    <!-- ✅ Book Price -->
+                    <p style="font-size: 1.1rem; font-weight: bold; color: #28a745;">${{ book.price }}</p>
+
+                    <!-- ✅ Action Buttons -->
+                    <div style="margin-top: 10px;">
+                        <a href="{% url 'book_detail' book.id %}" style="
+                            display: block; text-decoration: none; background: #17a2b8; color: white;
+                            padding: 8px 10px; border-radius: 5px; margin-bottom: 5px;
+                            transition: 0.3s;
+                        " onmouseover="this.style.background='#138496';" 
+                          onmouseout="this.style.background='#17a2b8';">📖 View Details</a>
+
+                        <a href="{% url 'add_to_cart' book.id %}" style="
+                            display: block; text-decoration: none; background: #007bff; color: white;
+                            padding: 8px 10px; border-radius: 5px;
+                            transition: 0.3s;
+                        " onmouseover="this.style.background='#0056b3';" 
+                          onmouseout="this.style.background='#007bff';">🛒 Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-center">No books available at the moment.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

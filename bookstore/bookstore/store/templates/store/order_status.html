@@ -1,0 +1,33 @@
+{% extends "store/base.html" %}
+{% block content %}
+<div class="container">
+    <h2>Your Orders</h2>
+
+    {% if orders %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Total Price</th>
+                <th>Discounted Price</th>
+                <th>Status</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>#{{ order.id }}</td>
+                <td>${{ order.total_price }}</td>
+                <td>${{ order.discounted_price }}</td>
+                <td>{{ order.status }}</td>
+                <td>{{ order.created_at|date:"d M Y" }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No orders found.</p>  <!-- ✅ Show message if no valid orders -->
+    {% endif %}
+</div>
+{% endblock %}

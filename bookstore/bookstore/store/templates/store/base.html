@@ -1,0 +1,250 @@
+{% load static %} 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Online Bookstore</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}"> 
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    
+    <!-- Inline CSS -->
+    <style>
+        /* Ensure the whole page takes full height */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+        }
+        /* ✅ Modern Book Card */
+.book-card {
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.book-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* ✅ Book Cover Image */
+.book-img-container {
+    height: 250px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f8f9fa;
+}
+
+.book-cover {
+    max-height: 100%;
+    width: auto;
+    object-fit: contain;
+}
+
+/* ✅ Book Title */
+.card-title {
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+/* ✅ Rating Stars */
+.rating i {
+    font-size: 16px;
+    margin-right: 3px;
+}
+
+/* ✅ Buttons */
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+    transition: 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-outline-info {
+    transition: 0.3s;
+}
+
+.btn-outline-info:hover {
+    background-color: #17a2b8;
+    color: white;
+}
+
+
+        /* Content wrapper to push footer down */
+        .content-wrapper {
+            flex: 1;  /* This makes sure the content expands and pushes the footer down */
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            padding: 15px;
+        }
+
+        /* Card Styling */
+        .card {
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Book cover images */
+        .book-cover {
+            height: 300px;
+            object-fit: cover;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+        /* Sticky Footer */
+        .footer {
+            background-color: #343a40;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">Bookstore</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'cart' %}">Cart</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'order_status' %}">Order Status</a>  <!-- ✅ Added Button -->
+                        <!-- </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'login' %}">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'signup' %}">Signup</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav> --> 
+
+    <nav class="navbar navbar-expand-lg ">
+        <div class="container">
+    
+            <!-- 🔹 Brand Logo -->
+            <a class="navbar-brand" href="{% url 'home' %}">read<span>books</span></a>
+    
+            <!-- 🔹 Mobile Toggle Button -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+    
+            <!-- 🔹 Navbar Content -->
+            <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
+                
+                <!-- ✅ Browse Category Dropdown -->
+                <div class="browse-category dropdown me-3">
+                    <button class="btn   dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        Browse Category
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'home' %}">All Books</a></li>
+                        {% for category in categories %}
+                            <li><a class="dropdown-item" href="{% url 'home' %}?category={{ category.id }}">{{ category.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+    
+                <!-- ✅ Search Bar -->
+                <form method="GET" class="d-flex">
+                    <input class="form-control me-2" type="search" name="search" placeholder="Search Book" aria-label="Search">
+                    <button class="btn bg-sky-400 " type="submit">Search</button>
+                </form>
+    
+                <!-- ✅ Right Side - Profile & Authentication Links -->
+                <ul class="navbar-nav ms-auto">
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'cart' %}">Cart</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'order_status' %}">Order Status</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown">
+                                <img src="https://randomuser.me/api/portraits/women/63.jpg" alt="User" class="rounded-circle" width="30">
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="#">Profile</a></li>
+                                <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                            </ul>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'login' %}">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'signup' %}">Signup</a>
+                        </li>
+                    {% endif %}
+                </ul>
+    
+            </div>
+        </div>
+    </nav>
+    
+
+
+    <!-- Main Content Wrapper -->
+    <div class="content-wrapper">
+        <div class="container mt-4">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+
+    <!-- Sticky Footer -->
+    <div class="footer">
+        <p>&copy; 2024 Online Bookstore | All Rights Reserved</p>
+    </div>
+
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{% extends "store/base.html" %}
+{% block content %}
+<div class="container col-md-4">
+    <h2 class="text-center">Login</h2>
+    <form method="POST" class="p-3 border rounded bg-light">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary w-100">Login</button>
+    </form>
+    <p class="text-center mt-2">Don't have an account? <a href="{% url 'signup' %}">Sign Up</a></p>
+</div>
+{% endblock %}

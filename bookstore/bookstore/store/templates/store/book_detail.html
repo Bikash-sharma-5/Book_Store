@@ -1,0 +1,106 @@
+{% extends "store/base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <!-- ✅ Book Image -->
+        <div class="col-md-5">
+            <div class="card shadow-lg border-0" style="
+                border-radius: 10px;
+                overflow: hidden;
+                box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            ">
+                <img src="{{ book.cover_image.url }}" class="card-img-top" alt="{{ book.title }}" style="width: 100%; height: auto;">
+            </div>
+        </div>
+
+        <!-- ✅ Book Details -->
+        <div class="col-md-7" style="padding: 20px;">
+            <h2 style="color: #007bff;">{{ book.title }}</h2>
+            <p style="color: gray; font-size: 1rem;"><strong>By:</strong> {{ book.author }}</p>
+            <h4 style="color: #28a745;"><strong>Price:</strong> ${{ book.price }}</h4>
+            <p style="margin-top: 15px; font-size: 1.1rem;">{{ book.description }}</p>
+
+            <!-- ✅ Display Average Rating -->
+            <h5 style="margin-top: 15px;">⭐ Average Rating: <span style="color: #f1c40f;">{{ average_rating }}/5</span></h5>
+
+            <!-- ✅ Rating Form -->
+            {% if user.is_authenticated %}
+            <form method="POST" style="margin-top: 15px;">
+                {% csrf_token %}
+                <label style="font-weight: bold;">Rate this Book:</label>
+                {{ rating_form.as_p }}
+                <button type="submit" name="rating_submit" style="
+                    background: #ffc107;
+                    color: black;
+                    padding: 8px 15px;
+                    border-radius: 5px;
+                    border: none;
+                    cursor: pointer;
+                    transition: 0.3s;
+                " onmouseover="this.style.background='#e0a800';" 
+                   onmouseout="this.style.background='#ffc107';">⭐ Submit Rating</button>
+            </form>
+            {% else %}
+            <p style="color: gray;"><a href="{% url 'login' %}" style="color: #007bff;">Login</a> to rate this book.</p>
+            {% endif %}
+
+            <!-- ✅ Add to Cart Button -->
+            <a href="{% url 'add_to_cart' book.id %}" style="
+                display: inline-block;
+                background: #28a745;
+                color: white;
+                padding: 10px 15px;
+                border-radius: 5px;
+                text-decoration: none;
+                margin-top: 20px;
+                transition: 0.3s;
+            " onmouseover="this.style.background='#218838';"
+               onmouseout="this.style.background='#28a745';">🛒 Add to Cart</a>
+        </div>
+    </div>
+
+    <!-- ✅ Comments Section -->
+    <div style="margin-top: 40px;">
+        <h3 style="color: #6c757d;">💬 Comments</h3>
+        <div>
+            {% for comment in comments %}
+            <div style="
+                background: #f8f9fa;
+                padding: 15px;
+                border-radius: 10px;
+                margin-bottom: 10px;
+                box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            ">
+                <strong style="color: black;">{{ comment.user.username }}</strong> 
+                <small style="color: gray;">({{ comment.created_at }})</small>
+                <p style="margin-top: 10px;">{{ comment.text }}</p>
+            </div>
+            {% empty %}
+            <p style="color: gray;">No comments yet. Be the first to comment!</p>
+            {% endfor %}
+        </div>
+
+        <!-- ✅ Comment Form -->
+        {% if user.is_authenticated %}
+        <form method="POST" style="margin-top: 20px;">
+            {% csrf_token %}
+            <label style="font-weight: bold;">Leave a Comment:</label>
+            {{ comment_form.as_p }}
+            <button type="submit" name="comment_submit" style="
+                background: #007bff;
+                color: white;
+                padding: 8px 15px;
+                border-radius: 5px;
+                border: none;
+                cursor: pointer;
+                transition: 0.3s;
+            " onmouseover="this.style.background='#0056b3';" 
+               onmouseout="this.style.background='#007bff';">💬 Post Comment</button>
+        </form>
+        {% else %}
+        <p style="color: gray;"><a href="{% url 'login' %}" style="color: #007bff;">Login</a> to comment on this book.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

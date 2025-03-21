@@ -1,0 +1,27 @@
+{% extends "store/base.html" %}
+{% block content %}
+<div class="container">
+    <h2>Checkout</h2>
+    <p><strong>Total Price:</strong> ${{ total_price }}</p>
+
+    {% if applied_coupon %}
+        <p><strong>Discount Applied ({{ applied_coupon.code }}):</strong> -${{ discount }}</p>
+    {% endif %}
+
+    <!-- ✅ Apply Coupon -->
+    <form method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="apply_coupon" value="true">
+        <label for="coupon_code">Enter Coupon Code:</label>
+        <input type="text" name="coupon_code" placeholder="Enter code">
+        <button type="submit">Apply Coupon</button>
+    </form>
+
+    <!-- ✅ Proceed to Payment -->
+    <form method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="proceed_payment" value="true">
+        <button type="submit">Proceed to Payment</button>
+    </form>
+</div>
+{% endblock %}

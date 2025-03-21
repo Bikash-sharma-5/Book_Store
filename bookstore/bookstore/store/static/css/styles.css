@@ -1,0 +1,114 @@
+/* Background color */
+body {
+    background-color: #f8f9fa;
+}
+
+/* Card Styling */
+.card {
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+}
+/* ✅ Center Navbar */
+.navbar-nav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+/* ✅ Adjust Button Sizes */
+.navbar-nav .btn {
+    font-size: 14px;
+    padding: 8px 12px;
+    border-radius: 10px;
+}
+
+/* ✅ Active Button Highlight */
+.navbar-nav .btn.active {
+    background-color: #343a40;
+    color: white;
+    border: 2px solid #343a40;
+}
+
+/* Book cover images */
+.book-cover {
+    height: 100px;
+    object-fit: cover;
+}
+
+/* Button Styling */
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+/* ✅ Modern Book Card */
+.book-card {
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.book-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* ✅ Book Cover Image */
+.book-img-container {
+    height: 250px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f8f9fa;
+}
+
+.book-cover {
+    max-height: 100%;
+    width: auto;
+    object-fit: contain;
+}
+
+/* ✅ Book Title */
+.card-title {
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+/* ✅ Rating Stars */
+.rating i {
+    font-size: 16px;
+    margin-right: 3px;
+}
+
+/* ✅ Buttons */
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+    transition: 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-outline-info {
+    transition: 0.3s;
+}
+
+.btn-outline-info:hover {
+    background-color: #17a2b8;
+    color: white;
+}
